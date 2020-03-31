@@ -1,0 +1,112 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>The Button</title>
+        <script src="the_button.js"></script>
+        <script id="vs" type="text/plain"> #version 300 es
+            in vec2 a_position;
+            void main() {
+                gl_Position = vec4(a_position, 0, 1);
+            }
+        </script>
+        <script id="fs" type="text/plain"> #version 300 es
+            precision mediump float;
+            uniform vec4 u_color;
+            out vec4 outColor;
+            void main() {
+                outColor = u_color;
+            }
+        </script>
+        <script id="text-vs" type="text/plain"> #version 300 es
+            in vec2 a_position;
+            in vec2 a_texCoord;
+            out vec2 texCoord;
+            void main() {
+                gl_Position = vec4(a_position, 0, 1);
+                texCoord = a_texCoord;
+            }
+        </script>
+        <script id="text-fs" type="text/plain"> #version 300 es
+            precision mediump float;
+            in vec2 texCoord;
+            uniform sampler2D u_texture;
+            out vec4 outColor;
+            void main() {
+                outColor = texture(u_texture, texCoord);
+            }
+        </script>
+        <style>
+            body {
+                font: 14pt sans-serif;
+            }
+            
+            .puzzle {
+                display: flex;
+            }
+            
+            .bomb-info {
+                margin-left: 8px;
+                text-align: center;
+                font-family: monospace;
+            }
+            
+            .under-render {
+                margin-top: 8px;
+                width: 480px;
+                text-align: center;
+            }
+            .absent {
+                display: none;
+            }
+            
+            #render {
+                height: 480px;
+            }
+            
+            #timer {
+                font-size: 24pt;
+                font-weight: bold;
+            }
+            
+            #gen-new {
+                color: #0000F0;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <div class="puzzle">
+                <div>
+                    <canvas id="render" width="480px" height="480px"></canvas>
+                    <div class="under-render">
+                        <span id="gen-new">Generate new</span>
+                    </div>
+                </div>
+                <div class="bomb-info">
+                    <span id="timer">XXX:XX</span>
+                    <br/>
+                    <span id="edgework"></span>
+                </div>
+            </div>
+        </div>
+        <div class="absent" id="no-support">
+            <p>Your web browser does not support WebGL2.</p>
+            <p>Please visit 
+                <a href="https://get.webgl.org/webgl2/">Khronos' WebGL2 test</a>
+             for further assistance.</p>
+        </div>
+        <div class="absent" id="no-init">
+            <p>Something went wrong during the WebGL2 initialization.</p>
+            <p>Please visit
+                <a href="http://get.webgl.org/webgl2/troubleshooting">Khronos' WebGL 
+                    troubleshooting</a>
+             for further assistance.</p>
+        </div>
+        <div class="absent" id="low-perform">
+            <p>Your device's performance is too low at the moment.</p>
+            <p>To spare your device from a virtual heart attack, the webapp has ceased loading.</p>
+            <p>Try closing tabs or other programs/apps, and then refresh this page.</p>
+        </div>
+    </body>
+</html>
